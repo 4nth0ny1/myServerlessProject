@@ -9,11 +9,14 @@ provider:
   region: us-east-2
   environment:
     tableName: ${self:custom.tableName}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:*
-      Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:*
+            - s3:*
+          Resource: "*"
 
 plugins:
   - serverless-s3-sync
@@ -53,10 +56,10 @@ functions:
 
 resources:
   Resources:
-    DemoBucketUpload:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: my-serverless-project-upload-bucket-123123
+    # DemoBucketUpload:
+    #   Type: AWS::S3::Bucket
+    #   Properties:
+    #     BucketName: my-serverless-project-upload-bucket-123123
     MyDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
